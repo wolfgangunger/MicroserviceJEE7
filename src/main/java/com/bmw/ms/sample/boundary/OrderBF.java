@@ -32,8 +32,6 @@ import com.bmw.ms.sample.entity.SalesOrderTOI;
 
 /**
  * Business Facade example - Boundary
- * BF does not have transactions - only services open transactions
- * 
  * this BF contains methods for sales orders and sales order details 
  * @author UNGERW
  */
