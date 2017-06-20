@@ -1,4 +1,4 @@
-package com.bmw.ms.base;
+package com.bmw.ms.business.base;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

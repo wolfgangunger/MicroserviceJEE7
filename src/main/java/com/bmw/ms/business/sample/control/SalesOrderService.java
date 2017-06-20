@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bmw.ms.sample.control;
+package com.bmw.ms.business.sample.control;
 
-import com.bmw.ms.base.control.AbstractDataService;
-import com.bmw.ms.base.control.AbstractService;
-import com.bmw.ms.sample.entity.SalesOrder;
+import com.bmw.ms.business.base.control.AbstractDataService;
+import com.bmw.ms.business.base.control.AbstractService;
+import com.bmw.ms.business.sample.entity.SalesOrder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

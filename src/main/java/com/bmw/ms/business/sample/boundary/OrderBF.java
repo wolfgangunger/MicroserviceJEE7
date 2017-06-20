@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bmw.ms.sample.boundary;
+package com.bmw.ms.business.sample.boundary;
 
-import com.bmw.ms.base.util.TOIMapperUtil;
+import com.bmw.ms.business.base.util.TOIMapperUtil;
 
-import com.bmw.ms.sample.control.SalesOrderDetailDataService;
-import com.bmw.ms.sample.control.SalesOrderService;
+import com.bmw.ms.business.sample.control.SalesOrderDetailDataService;
+import com.bmw.ms.business.sample.control.SalesOrderService;
 
-import com.bmw.ms.sample.entity.SalesOrder;
-import com.bmw.ms.sample.entity.SalesOrderDetail;
+import com.bmw.ms.business.sample.entity.SalesOrder;
+import com.bmw.ms.business.sample.entity.SalesOrderDetail;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -28,7 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import com.bmw.ms.sample.entity.SalesOrderTOI;
+import com.bmw.ms.business.sample.entity.SalesOrderTOI;
 
 /**
  * Business Facade example - Boundary

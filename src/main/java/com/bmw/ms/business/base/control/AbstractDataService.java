@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bmw.ms.base.control;
+package com.bmw.ms.business.base.control;
 
-import com.bmw.ms.base.entity.AbstractEntity;
-import com.bmw.ms.base.entity.BusinessEntity;
+import com.bmw.ms.business.base.entity.AbstractEntity;
+import com.bmw.ms.business.base.entity.BusinessEntity;
 import java.math.BigInteger;
 
 import javax.persistence.EntityManager;

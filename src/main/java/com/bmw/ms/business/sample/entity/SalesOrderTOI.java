@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bmw.ms.sample.entity;
+package com.bmw.ms.business.sample.entity;
 
-import com.bmw.ms.base.entity.AbstractEntityTOI;
+import com.bmw.ms.business.base.entity.AbstractEntityTOI;
 
 /**
  * transfer object interface - order without details (for example usage in lists)

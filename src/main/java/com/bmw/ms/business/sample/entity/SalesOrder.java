@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bmw.ms.sample.entity;
+package com.bmw.ms.business.sample.entity;
 
-import com.bmw.ms.base.entity.BusinessEntity;
+import com.bmw.ms.business.base.entity.BusinessEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
