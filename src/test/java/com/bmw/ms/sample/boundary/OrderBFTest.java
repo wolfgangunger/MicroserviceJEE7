@@ -7,22 +7,22 @@ package com.bmw.ms.sample.boundary;
 
 import com.bmw.ms.business.base.ArquillianTestBase;
 import javax.inject.Inject;
-import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
  * @author UNGERW
  */
-public class OrderBFTest extends ArquillianTestBase  {
+public class OrderBFTest /* extends ArquillianTestBase*/  {
     
     @Inject
     private OrderBF orderBF;
     
     
-      // @Test
+       //@Test
     //@UsingDataSet("datasets/bcl.json")
     public void testEndpoints() {
-        Assert.assertNotNull(orderBF);
+        //Assert.assertNotNull(orderBF);
         //SalesOrder sa = orderBF.createSalesOrder();
         //Assert.assertNotNull(sa);
         
