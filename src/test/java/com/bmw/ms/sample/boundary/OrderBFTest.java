@@ -18,6 +18,7 @@ public class OrderBFTest extends ArquillianTestBase  {
     @Inject
     private OrderBF orderBF;
     
+    
       // @Test
     //@UsingDataSet("datasets/bcl.json")
     public void testEndpoints() {
