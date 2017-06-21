@@ -29,6 +29,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.bmw.ms.business.sample.entity.SalesOrderTOI;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Business Facade example - Boundary
@@ -36,6 +38,7 @@ import com.bmw.ms.business.sample.entity.SalesOrderTOI;
  * @author UNGERW
  */
 @Path("/sample")
+@Api(value = "/sample", description = "Example Business Facade")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class OrderBF {
@@ -59,6 +62,7 @@ public class OrderBF {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/initSalesOrder/")
+    @ApiOperation(value = "SalesOrder - create a new not yet persisted SalesOrder", response = SalesOrder.class)
     public SalesOrder createSalesOrder() {
         return orderService.create();
     }
@@ -68,6 +72,7 @@ public class OrderBF {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders/{id}")
+        @ApiOperation(value = "SalesOrder - find SalesOrder", response = SalesOrder.class)
     public SalesOrder findSalesOrder(@PathParam("id") BigInteger id) {
         return orderService.find(id);
     }
