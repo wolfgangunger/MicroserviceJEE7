@@ -2,6 +2,8 @@ Created by Wolfgang Unger, 5.2017
 
 
 Simple CA4 example with 2 entities and REST endpoints
+Swagger definition (by Swagger Servlet and Annotations) is also available
+Arqullian Examples also included
 
 Pre-Conditions:
 Local Postgres DB (Standard Installation) with Schema 'ms'
