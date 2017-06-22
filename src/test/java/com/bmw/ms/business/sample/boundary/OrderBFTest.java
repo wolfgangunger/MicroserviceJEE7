@@ -26,7 +26,7 @@ public class OrderBFTest extends ArquillianTestBase {
     private OrderBF orderBF;
 
     private static final String ORDER_NO_1 = "order1";
-    private static final String ORDER_NO_1b = "order1b";
+    private static final String ORDER_NO_1B = "order1b";
 
     /**
      * simple test without existing testdata - testing all crud methods
@@ -46,7 +46,7 @@ public class OrderBFTest extends ArquillianTestBase {
         so.setOrderNumber(ORDER_NO_1);
         Assert.assertNotNull(so);
         //update/persist
-        so = orderBF.persistSalesOrder(sc, so);
+        orderBF.persistSalesOrder(sc, so);
         //find
         SalesOrder persSO = orderBF.findSalesOrder(ORDER_NO_1);
         Assert.assertNotNull(persSO);
@@ -55,16 +55,16 @@ public class OrderBFTest extends ArquillianTestBase {
         persSO = orderBF.findSalesOrder( id);
         Assert.assertNotNull(persSO);
         //update/merge
-        persSO.setOrderNumber(ORDER_NO_1b);
+        persSO.setOrderNumber(ORDER_NO_1B);
         SalesOrder persSO1b = orderBF.mergeSalesOrder(sc, persSO);
         Assert.assertNotNull(persSO1b);
-        Assert.assertEquals(ORDER_NO_1b, persSO1b.getOrderNumber());
+        Assert.assertEquals(ORDER_NO_1B, persSO1b.getOrderNumber());
 
         //cleanup
-        persSO1b = orderBF.findSalesOrder( ORDER_NO_1b);
+        persSO1b = orderBF.findSalesOrder(ORDER_NO_1B);
         Assert.assertNotNull(persSO1b);
         orderBF.deleteSalesOrder(sc, persSO1b.getId());
-        persSO1b = orderBF.findSalesOrder( ORDER_NO_1b);
+        persSO1b = orderBF.findSalesOrder(ORDER_NO_1B);
         Assert.assertNull(persSO1b);
     }
 
@@ -74,7 +74,6 @@ public class OrderBFTest extends ArquillianTestBase {
     @Test
     @UsingDataSet("datasets/salesorders.json")
     public void testSalesOrdersWithDataSet() {
-        SecurityContext sc = createSecurityContextMock();
         List<SalesOrder> salesOrders = orderBF.getAllSalesOrders();
         Assert.assertNotNull(salesOrders);
         Assert.assertEquals(2, salesOrders.size());
