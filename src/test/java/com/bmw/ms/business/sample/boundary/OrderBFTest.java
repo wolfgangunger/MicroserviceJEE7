@@ -6,10 +6,12 @@
 package com.bmw.ms.business.sample.boundary;
 
 import com.bmw.ms.business.base.ArquillianTestBase;
+import com.bmw.ms.business.base.SecurityContextImpl;
 import com.bmw.ms.business.sample.entity.SalesOrder;
 import java.math.BigInteger;
 import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.core.SecurityContext;
 import org.jboss.arquillian.persistence.UsingDataSet;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,30 +35,36 @@ public class OrderBFTest extends ArquillianTestBase {
     //@UsingDataSet("datasets/bcl.json")
     public void testSalesOrderCrud() {
         Assert.assertNotNull(orderBF);
+        SecurityContext sc = createSecurityContextMock();
+
+        List<SalesOrder> salesOrders = orderBF.getAllSalesOrders();
+        // must be 0
+        Assert.assertEquals(0, salesOrders.size());
+
         SalesOrder so = orderBF.createSalesOrder();
         Assert.assertNotNull(so);
         so.setOrderNumber(ORDER_NO_1);
         Assert.assertNotNull(so);
         //update/persist
-        so = orderBF.persistSalesOrder(so);
+        so = orderBF.persistSalesOrder(sc, so);
         //find
         SalesOrder persSO = orderBF.findSalesOrder(ORDER_NO_1);
         Assert.assertNotNull(persSO);
         BigInteger id = persSO.getId();
         System.out.println(id);
-        persSO = orderBF.findSalesOrder(id);
+        persSO = orderBF.findSalesOrder( id);
         Assert.assertNotNull(persSO);
         //update/merge
         persSO.setOrderNumber(ORDER_NO_1b);
-        SalesOrder persSO1b = orderBF.mergeSalesOrder(persSO);
+        SalesOrder persSO1b = orderBF.mergeSalesOrder(sc, persSO);
         Assert.assertNotNull(persSO1b);
         Assert.assertEquals(ORDER_NO_1b, persSO1b.getOrderNumber());
 
         //cleanup
-        persSO1b = orderBF.findSalesOrder(ORDER_NO_1b);
+        persSO1b = orderBF.findSalesOrder( ORDER_NO_1b);
         Assert.assertNotNull(persSO1b);
-        orderBF.deleteSalesOrder(persSO1b.getId());
-        persSO1b = orderBF.findSalesOrder(ORDER_NO_1b);
+        orderBF.deleteSalesOrder(sc, persSO1b.getId());
+        persSO1b = orderBF.findSalesOrder( ORDER_NO_1b);
         Assert.assertNull(persSO1b);
     }
 
@@ -66,9 +74,15 @@ public class OrderBFTest extends ArquillianTestBase {
     @Test
     @UsingDataSet("datasets/salesorders.json")
     public void testSalesOrdersWithDataSet() {
+        SecurityContext sc = createSecurityContextMock();
         List<SalesOrder> salesOrders = orderBF.getAllSalesOrders();
         Assert.assertNotNull(salesOrders);
         Assert.assertEquals(2, salesOrders.size());
+    }
+
+    private SecurityContext createSecurityContextMock() {
+        SecurityContextImpl sc = new SecurityContextImpl();
+        return sc;
     }
 
 }

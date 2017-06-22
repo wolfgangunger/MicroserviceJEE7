@@ -5,6 +5,7 @@
  */
 package com.bmw.ms.business.sample.boundary;
 
+import com.bmw.ms.business.base.security.PrincipalSecurityInterceptor;
 import com.bmw.ms.business.base.util.TOIMapperUtil;
 
 import com.bmw.ms.business.sample.control.SalesOrderDetailDataService;
@@ -29,14 +30,23 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.bmw.ms.business.sample.entity.SalesOrderTOI;
+import com.bmw.ms.business.system.control.AuthService;
+import com.bmw.ms.business.system.entity.Account;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.interceptor.Interceptors;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * Business Facade example - Boundary
- * this BF contains methods for sales orders and sales order details 
+ * this BF contains methods for sales orders and sales order details <br>
+ * some of the methods (delete, update) use a Security Context and Principal
+ * 
  * @author UNGERW
  */
+@Interceptors({ PrincipalSecurityInterceptor.class })
+//@DeclareRoles({"Admin", "Manager"})
 @Path("/sample")
 @Api(value = "/sample", description = "Example Business Facade")
 @Stateless
@@ -50,6 +60,10 @@ public class OrderBF {
     // details are simple - use data service directly - no service class required
     @Inject
     private SalesOrderDetailDataService orderDetailDataService;
+    
+    //authentication service
+    @Inject
+    private AuthService authService;
 
     ///////////////// template BF methods //////////////
     //CRUD for Order entity ////////
@@ -68,6 +82,11 @@ public class OrderBF {
     }
 
     // R Read one order by ID
+    /**
+     * 
+     * @param id Sales Order ID
+     * @return 
+     */
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +106,7 @@ public class OrderBF {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrderByOrderNumber/{orderNumber}")
-    public SalesOrder findSalesOrder(@PathParam("orderNumber") String orderNumber) {
+    public SalesOrder findSalesOrder( @PathParam("orderNumber") String orderNumber) {
         return orderService.findBySalesOrderByNumber(orderNumber);
     }
 
@@ -99,6 +118,7 @@ public class OrderBF {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders")
+   // @RolesAllowed({"Admin", "Manager"})
     public List<SalesOrder> getAllSalesOrders() {
         return orderService.getAllSalesOrders();
     }
@@ -120,6 +140,7 @@ public class OrderBF {
     /**
      * persist/update a new Order entity ( JPA = persist ; REST = create)
      *
+     * @param sc SecurityContext including Principal
      * @param order
      * @return
      */
@@ -127,7 +148,7 @@ public class OrderBF {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders/")
-    public SalesOrder persistSalesOrder(SalesOrder order) {
+    public SalesOrder persistSalesOrder(@Context SecurityContext sc, SalesOrder order) {
         orderService.persist(order);
         return order;
     }
@@ -135,6 +156,7 @@ public class OrderBF {
     /**
      * update existing Order
      *
+     * @param sc SecurityContext including Principal
      * @param order
      * @return
      */
@@ -142,19 +164,22 @@ public class OrderBF {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders/{id}")
-    public SalesOrder mergeSalesOrder(SalesOrder order) {
+    public SalesOrder mergeSalesOrder(@Context SecurityContext sc, SalesOrder order) {
         return orderService.merge(order);
     }
 
     /**
      * delete a Order
      *
+     * @param sc SecurityContext including Principal
      * @param id
      */
     @DELETE
     @Path("/salesOrders/{id}")
-    public void deleteSalesOrder(@PathParam("id") BigInteger id) {
-        orderService.delete(id);
+    public void deleteSalesOrder(@Context SecurityContext sc, @PathParam("id") BigInteger id) {
+        // get account object from service, you might use this for interceptors on servive tier
+        Account account = authService.authenticateAccount(sc.getUserPrincipal().getName());
+        orderService.delete(account,id);
     }
 
     //CRUD for Order Detail entity - use dataService directly ////////
@@ -175,6 +200,7 @@ public class OrderBF {
     
     /**
      * read all order details
+     * @param sc
      * @return 
      */
       @GET
@@ -191,12 +217,13 @@ public class OrderBF {
       @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrderDetailsByOrder/{orderId}")
-    public List<SalesOrderDetail> getSalesOrderDetailsByOrder(@PathParam("orderId") BigInteger orderId) {
+    public List<SalesOrderDetail> getSalesOrderDetailsByOrder( @PathParam("orderId") BigInteger orderId) {
         return orderDetailDataService.findSalesOrderDetailsByOrder(orderId);
     }
 
     /**
      * get one sales order detail by id
+     * @param sc
      * @param id
      * @return 
      */
