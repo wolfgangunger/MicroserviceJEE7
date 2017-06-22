@@ -37,21 +37,5 @@ public class AccountSecurityInterceptor {
         //check for roles ...rights..
     }
 
-    private void verifyUserPermission(final InvocationContext ic) {
-        // TODO add here any checks for security
-        System.out.println("User Permission Check: " + ic.getMethod().getDeclaringClass() + "#" + ic.getMethod().getName());
-    }
 
-    private <T extends Annotation> T getAnnotation(final Class<T> annotationClass, final Method method) {
-        return method.getAnnotation(annotationClass);
-    }
-
-    private <T extends Annotation> T getAnnotation(final Class<T> annotationClass, final Class<?> clazz) {
-        return clazz.getAnnotation(annotationClass);
-    }
-
-    private <T extends Annotation> boolean hasAnnotation(final InvocationContext ic, final Class<T> annotationClass) {
-        return getAnnotation(annotationClass, ic.getMethod().getDeclaringClass()) != null
-                || getAnnotation(annotationClass, ic.getMethod()) != null;
-    }
 }

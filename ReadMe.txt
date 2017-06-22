@@ -33,10 +33,11 @@ mandatory
 handles db (entity methods) methods, CRUD and queries 
 
 Service:
-optional for complex entities
+optional (only for complex entities)
 handles business logic, no queries and entity manager methods
 
 BF:
 BusinessFacade:
 mandatory 
 at least on BF is required. It can inject n services/dataServices and offer those methods
+offers REST endpoints, no queries and entity manager methods
