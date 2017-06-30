@@ -8,6 +8,7 @@ Arqullian Examples also included
 Pre-Conditions:
 Local Postgres DB (Standard Installation) with Schema 'ms'
 User postgres, Password postgres
+Connection Pool and JDBC Resource on App Server (jdbc/ms)
 
 After Application Deployment (will create tables ) execute the insert script
 
