@@ -48,7 +48,7 @@ import javax.ws.rs.core.SecurityContext;
 @Interceptors({ PrincipalSecurityInterceptor.class })
 //@DeclareRoles({"Admin", "Manager"})
 @Path("/sample")
-@Api(value = "/sample", description = "Example Business Facade")
+@Api(value = "/sample", description = "Example Sales Order Business Facade", consumes = "application/json", produces = "application/json")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class OrderBF {
@@ -119,6 +119,7 @@ public class OrderBF {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders")
    // @RolesAllowed({"Admin", "Manager"})
+    @ApiOperation(value = "getAllSalesOrders", response = List.class)
     public List<SalesOrder> getAllSalesOrders() {
         return orderService.getAllSalesOrders();
     }
@@ -148,6 +149,7 @@ public class OrderBF {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/salesOrders/")
+       @ApiOperation(value = "persistSalesOrder", response = SalesOrder.class)
     public SalesOrder persistSalesOrder(@Context SecurityContext sc, SalesOrder order) {
         orderService.persist(order);
         return order;
@@ -163,7 +165,7 @@ public class OrderBF {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/salesOrders/{id}")
+    @Path("/salesOrders/")
     public SalesOrder mergeSalesOrder(@Context SecurityContext sc, SalesOrder order) {
         return orderService.merge(order);
     }

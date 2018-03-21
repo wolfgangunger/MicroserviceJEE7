@@ -27,7 +27,7 @@ public class SwaggerServlet extends HttpServlet {
     @Override
     public void init(final ServletConfig config) throws ServletException {
         super.init(config);
-        System.out.println("Swagger Servlet");
+        System.out.println("##### Swagger Servlet");
         try {
             swaggerString = loadSwagger(SWAGGER_JSON);
         } catch (IOException | URISyntaxException e) {

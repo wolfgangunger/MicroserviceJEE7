@@ -6,6 +6,7 @@
 package com.ntt.ms.business.sample.entity;
 
 import com.ntt.ms.business.base.entity.BusinessEntity;
+import io.swagger.annotations.ApiModel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * Sales Order Detail
  * @author UNGERW
  */
+@ApiModel(description = "Sales Order Detail model")
 @Entity
 @Table(name = "T_SALESORDERDETAIL")
 @NamedQueries({

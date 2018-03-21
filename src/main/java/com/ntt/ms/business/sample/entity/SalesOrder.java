@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,8 +24,14 @@ import javax.persistence.Table;
  * Sales Order 
  * @author UNGERW
  */
+//@ApiModel(description = "Sales Order model")
+
+//@Data
+//@FieldDefaults(level = AccessLevel.PRIVATE)
+//@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "T_SALESORDER")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NamedQueries({
     @NamedQuery(name = SalesOrder.FIND_ALL, query = "SELECT o FROM  SalesOrder o"),
     @NamedQuery(name = SalesOrder.FIND_BY_ORDER_NUMBBER, query = "SELECT o FROM SalesOrder o WHERE o.orderNumber  = :orderNumber")})

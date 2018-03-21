@@ -7,6 +7,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>swagger</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/swagger</url-pattern>
     </servlet-mapping>
 </web-app>
